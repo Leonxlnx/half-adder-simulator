@@ -18,9 +18,9 @@ export default function Bit({
     variant = 'default'
 }: BitProps) {
     const sizeClasses = {
-        sm: 'w-10 h-10 text-lg',
-        md: 'w-14 h-14 text-xl',
-        lg: 'w-16 h-16 text-2xl'
+        sm: 'w-8 h-8 text-base sm:w-10 sm:h-10 sm:text-lg',
+        md: 'w-11 h-11 text-lg sm:w-14 sm:h-14 sm:text-xl',
+        lg: 'w-14 h-14 text-xl sm:w-16 sm:h-16 sm:text-2xl'
     };
 
     const getBackground = () => {
