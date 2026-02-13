@@ -462,27 +462,41 @@ export default function Home() {
   // ─── CHAPTER VIEW ────────────────────────────────────────
   return (
     <main className="min-h-dvh bg-gradient-to-b from-slate-50 to-gray-100 flex flex-col overflow-x-hidden">
-      {/* Bigger Nav Bar */}
+      {/* Smart Nav Bar */}
       <div className="sticky top-0 z-50 bg-white/70 backdrop-blur-xl border-b border-slate-200/40">
-        <div className="max-w-2xl mx-auto px-5 py-4 sm:py-5 flex items-center justify-between">
-          <button onClick={goBack} className="flex items-center gap-2 text-slate-500 hover:text-slate-800 transition-colors">
-            <IconArrowLeft className="w-5 h-5" />
-            <span className="text-sm sm:text-base font-medium">{stepIdx > 0 ? 'Zurück' : 'Übersicht'}</span>
-          </button>
-          <div className="flex items-center gap-2">
-            <div className="flex gap-1.5">
+        <div className="max-w-2xl mx-auto px-5 pt-3 pb-2.5 sm:pt-4 sm:pb-3">
+          {/* Top Row: Home / Chapter Title / Counter */}
+          <div className="flex items-center justify-between mb-2">
+            <button onClick={() => setView('overview')} className="flex items-center gap-1.5 text-slate-400 hover:text-slate-700 transition-colors">
+              <svg viewBox="0 0 20 20" fill="none" className="w-4 h-4 sm:w-5 sm:h-5"><path d="M3 10l7-7 7 7M5 8v8a1 1 0 001 1h3v-4h2v4h3a1 1 0 001-1V8" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" /></svg>
+              <span className="text-xs sm:text-sm font-medium">Übersicht</span>
+            </button>
+            <span className="text-sm sm:text-base font-semibold text-slate-700 truncate mx-4 text-center flex-1">{chapter.title}</span>
+            <span className="text-xs sm:text-sm text-slate-400 font-semibold tabular-nums flex-shrink-0">{stepIdx + 1}/{totalSteps}</span>
+          </div>
+          {/* Bottom Row: Back + Progress */}
+          <div className="flex items-center gap-3">
+            {stepIdx > 0 ? (
+              <button onClick={() => setStepIdx(stepIdx - 1)} className="flex items-center gap-1 text-slate-400 hover:text-slate-600 transition-colors flex-shrink-0">
+                <IconArrowLeft className="w-3.5 h-3.5" />
+                <span className="text-[11px] sm:text-xs font-medium">Zurück</span>
+              </button>
+            ) : (
+              <div className="w-14" />
+            )}
+            <div className="flex-1 flex justify-center gap-1.5">
               {Array.from({ length: totalSteps }).map((_, i) => (
                 <div key={i}
-                  className="h-2.5 rounded-full transition-all duration-300"
+                  className="h-2 rounded-full transition-all duration-300"
                   style={{
-                    width: i === stepIdx ? 24 : 10,
+                    width: i === stepIdx ? 22 : 8,
                     backgroundColor: i === stepIdx ? chapter.color : i < stepIdx ? chapter.color + '50' : '#E2E8F0',
                   }}
                 />
               ))}
             </div>
+            <div className="w-14" />
           </div>
-          <span className="text-xs sm:text-sm text-slate-400 font-semibold tabular-nums">{stepIdx + 1} / {totalSteps}</span>
         </div>
       </div>
 
