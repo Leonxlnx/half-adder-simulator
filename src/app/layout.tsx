@@ -19,8 +19,8 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  title: "Quantum Algorithms — Interactive Learning Module",
-  description: "From classical bits and logic gates to quantum supremacy. An interactive learning module for beginners.",
+  title: "Quantenalgorithmen — Interaktives Lernmodul",
+  description: "Von Bits und Logikgattern bis zur Quantenüberlegenheit. Ein interaktives Lernmodul für Einsteiger.",
 };
 
 export default function RootLayout({
@@ -29,7 +29,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="de">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >

@@ -52,27 +52,38 @@ export default function BinaryTaskScreen({ onContinue }: BinaryTaskScreenProps) 
 
     return (
         <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: -20 }}
-            transition={{ duration: 0.4 }}
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -12 }}
+            transition={{ duration: 0.3, ease: [0.25, 0.1, 0.25, 1] }}
             className="w-full max-w-lg mx-auto"
         >
-            <motion.p
-                initial={{ opacity: 0, y: 10 }}
+            {/* Tip Box */}
+            <motion.div
+                initial={{ opacity: 0, y: 8 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="text-center text-slate-500 text-sm sm:text-lg mb-4 sm:mb-8 px-2"
+                transition={{ delay: 0.05 }}
+                className="bg-blue-50 border border-blue-100 rounded-xl p-3 mb-4 sm:mb-6"
             >
-                Toggle the bits to complete each binary sum.
+                <p className="text-blue-700 text-xs sm:text-sm text-center">
+                    💡 <strong>Tipp:</strong> Tippe auf die Bits, um sie zwischen 0 und 1 umzuschalten. Ziel: Übertrag und Summe korrekt ausfüllen.
+                </p>
+            </motion.div>
+
+            <motion.p
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                className="text-center text-slate-500 text-sm sm:text-base mb-3 sm:mb-5 px-2"
+            >
+                Vervollständige die binäre Addition.
             </motion.p>
 
             <motion.div
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 12 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.1 }}
-                className={`bg-white rounded-2xl sm:rounded-3xl p-4 sm:p-8 soft-shadow-lg ${feedback === 'correct' ? 'ring-2 ring-emerald-400 ring-opacity-50' : ''}`}
+                transition={{ delay: 0.08 }}
+                className={`bg-white rounded-2xl sm:rounded-3xl p-4 sm:p-8 soft-shadow-lg ${feedback === 'correct' ? 'ring-2 ring-emerald-400/50' : ''}`}
             >
-                {/* Header labels */}
                 <div className="flex items-center justify-center gap-2 sm:gap-3 mb-3">
                     <span className="w-6 sm:w-8 text-center text-[10px] sm:text-xs text-slate-400 font-medium uppercase">A</span>
                     <span className="w-4 sm:w-5"></span>
@@ -88,9 +99,9 @@ export default function BinaryTaskScreen({ onContinue }: BinaryTaskScreenProps) 
                     {rows.map((row, i) => (
                         <motion.div
                             key={i}
-                            initial={{ opacity: 0, y: 10 }}
+                            initial={{ opacity: 0, y: 6 }}
                             animate={{ opacity: 1, y: 0 }}
-                            transition={{ delay: 0.1 + i * 0.05 }}
+                            transition={{ delay: 0.08 + i * 0.04 }}
                             className="flex items-center justify-center gap-2 sm:gap-3"
                         >
                             <span className="w-6 sm:w-8 text-center font-mono text-lg sm:text-xl text-slate-800">{row.a}</span>
@@ -106,24 +117,29 @@ export default function BinaryTaskScreen({ onContinue }: BinaryTaskScreenProps) 
                 </div>
 
                 {feedback !== 'none' && (
-                    <motion.p initial={{ opacity: 0, y: 5 }} animate={{ opacity: 1, y: 0 }}
+                    <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }}
                         className={`text-center mt-4 sm:mt-6 text-xs sm:text-sm ${feedback === 'correct' ? 'text-emerald-600' : 'text-slate-500'}`}>
-                        {feedback === 'correct' ? 'Perfect! You nailed binary addition.' : 'Not quite — check your carry bits.'}
+                        {feedback === 'correct' ? '🎉 Perfekt! Binäre Addition gemeistert.' : 'Nicht ganz — schau nochmal auf die Carry-Bits.'}
                     </motion.p>
                 )}
             </motion.div>
 
-            <div className="mt-6 sm:mt-8 flex flex-col items-center gap-3 sm:gap-4">
+            <div className="mt-5 sm:mt-7 flex flex-col items-center gap-2">
                 {!showContinue ? (
-                    <motion.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} onClick={check}
-                        className="w-full sm:w-auto px-10 py-3 sm:py-3.5 rounded-full text-base sm:text-lg font-medium bg-slate-900 text-white soft-shadow hover:bg-slate-800 transition-all duration-200">
-                        Check
+                    <motion.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.97 }} onClick={check}
+                        className="w-full sm:w-auto px-10 py-3 rounded-full text-sm sm:text-base font-medium bg-slate-900 text-white soft-shadow hover:bg-slate-800 transition-all">
+                        Prüfen
                     </motion.button>
                 ) : (
-                    <motion.button initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} onClick={onContinue}
-                        className="w-full sm:w-auto px-10 py-3 sm:py-3.5 bg-slate-900 text-white rounded-full text-base sm:text-lg font-medium soft-shadow hover:bg-slate-800">
-                        Continue
+                    <motion.button initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.97 }} onClick={onContinue}
+                        className="w-full sm:w-auto px-10 py-3 bg-slate-900 text-white rounded-full text-sm sm:text-base font-medium soft-shadow hover:bg-slate-800">
+                        Weiter
                     </motion.button>
+                )}
+                {!showContinue && (
+                    <button onClick={onContinue} className="text-xs text-slate-400 hover:text-slate-600 transition-colors py-1">
+                        Überspringen →
+                    </button>
                 )}
             </div>
         </motion.div>

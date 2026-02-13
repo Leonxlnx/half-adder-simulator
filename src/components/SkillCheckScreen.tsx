@@ -1,60 +1,72 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import confetti from 'canvas-confetti';
-import { useEffect } from 'react';
 
 interface SkillCheckScreenProps {
     onContinue: () => void;
-    chapterTitle: string;
+    chapterTitle?: string;
 }
 
-/* Custom trophy SVG icon */
 function TrophyIcon({ className }: { className?: string }) {
     return (
-        <svg viewBox="0 0 48 48" fill="none" className={className} xmlns="http://www.w3.org/2000/svg">
-            <path d="M14 8h20v14c0 5.523-4.477 10-10 10s-10-4.477-10-10V8z" fill="currentColor" opacity="0.2" />
-            <path d="M14 8h20v14c0 5.523-4.477 10-10 10s-10-4.477-10-10V8z" stroke="currentColor" strokeWidth="2.5" strokeLinejoin="round" />
-            <path d="M14 12H8c0 4 2 7 6 8" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
-            <path d="M34 12h6c0 4-2 7-6 8" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
-            <line x1="24" y1="32" x2="24" y2="38" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" />
+        <svg viewBox="0 0 48 48" fill="none" className={className}>
+            <path d="M14 8h20v12c0 5.5-4.5 10-10 10s-10-4.5-10-10V8z" stroke="currentColor" strokeWidth="2.5" />
+            <path d="M14 14H8c0 5 3 7 6 8.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+            <path d="M34 14h6c0 5-3 7-6 8.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+            <line x1="24" y1="30" x2="24" y2="38" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" />
             <line x1="16" y1="38" x2="32" y2="38" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" />
         </svg>
     );
 }
 
 export default function SkillCheckScreen({ onContinue, chapterTitle }: SkillCheckScreenProps) {
-    useEffect(() => {
-        const timer = setTimeout(() => {
-            confetti({ particleCount: 100, spread: 80, origin: { y: 0.6 }, colors: ['#6366F1', '#3B82F6', '#10B981', '#F59E0B'] });
-        }, 300);
-        return () => clearTimeout(timer);
-    }, []);
+    const displayTitle = chapterTitle || 'Kapitel';
 
     return (
-        <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0 }}
-            transition={{ duration: 0.5 }} className="w-full max-w-md mx-auto text-center">
-
-            <motion.div initial={{ scale: 0, rotate: -20 }} animate={{ scale: 1, rotate: 0 }}
-                transition={{ delay: 0.2, type: 'spring', stiffness: 200, damping: 15 }}
-                className="w-24 h-24 sm:w-28 sm:h-28 mx-auto mb-6 sm:mb-8 bg-gradient-to-br from-amber-400 to-amber-500 rounded-3xl flex items-center justify-center soft-shadow-lg">
-                <TrophyIcon className="w-14 h-14 sm:w-16 sm:h-16 text-white" />
+        <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -12 }}
+            transition={{ duration: 0.3, ease: [0.25, 0.1, 0.25, 1] }}
+            className="w-full max-w-lg mx-auto text-center"
+        >
+            <motion.div
+                initial={{ scale: 0.85, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                transition={{ delay: 0.08, duration: 0.3, type: 'spring', stiffness: 200, damping: 15 }}
+                className="w-16 h-16 sm:w-20 sm:h-20 mx-auto mb-5 bg-amber-50 rounded-2xl flex items-center justify-center text-amber-500"
+            >
+                <TrophyIcon className="w-8 h-8 sm:w-10 sm:h-10" />
             </motion.div>
 
-            <motion.h2 initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4 }}
-                className="text-xl sm:text-2xl font-semibold text-slate-900 mb-2">
-                Chapter Complete!
+            <motion.h2
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.15 }}
+                className="text-xl sm:text-2xl font-semibold text-slate-900 mb-2"
+            >
+                {displayTitle} abgeschlossen!
             </motion.h2>
 
-            <motion.p initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.5 }}
-                className="text-slate-500 text-sm sm:text-base mb-8 sm:mb-10">
-                You finished &ldquo;{chapterTitle}&rdquo;
+            <motion.p
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.2 }}
+                className="text-slate-500 text-sm sm:text-base mb-6 sm:mb-8 px-4"
+            >
+                Nice! Du hast dieses Kapitel gemeistert. Weiter zum nächsten!
             </motion.p>
 
-            <motion.button initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.6 }}
-                whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} onClick={onContinue}
-                className="w-full sm:w-auto px-10 py-3.5 bg-slate-900 text-white rounded-full text-base sm:text-lg font-medium soft-shadow hover:bg-slate-800 transition-colors">
-                Back to Overview
+            <motion.button
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.28 }}
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.97 }}
+                onClick={onContinue}
+                className="w-full sm:w-auto px-10 py-3 bg-slate-900 text-white rounded-full text-sm sm:text-base font-medium soft-shadow hover:bg-slate-800 transition-colors"
+            >
+                Nächstes Kapitel
             </motion.button>
         </motion.div>
     );
