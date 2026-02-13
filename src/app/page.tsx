@@ -40,8 +40,14 @@ function IconCheck({ className }: { className?: string }) {
 function IconArrowLeft({ className }: { className?: string }) {
   return <svg viewBox="0 0 24 24" fill="none" className={className}><path d="M15 18l-6-6 6-6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" /></svg>;
 }
-function IconChevronRight({ className }: { className?: string }) {
-  return <svg viewBox="0 0 24 24" fill="none" className={className}><path d="M9 6l6 6-6 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" /></svg>;
+function IconChevronDown({ className }: { className?: string }) {
+  return <svg viewBox="0 0 24 24" fill="none" className={className}><path d="M6 9l6 6 6-6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" /></svg>;
+}
+function IconPlay({ className }: { className?: string }) {
+  return <svg viewBox="0 0 24 24" fill="none" className={className}><polygon points="8,5 20,12 8,19" fill="currentColor" /></svg>;
+}
+function IconBook({ className }: { className?: string }) {
+  return <svg viewBox="0 0 24 24" fill="none" className={className}><path d="M4 4h6a2 2 0 012 2v14a1 1 0 00-1-1H4V4z" stroke="currentColor" strokeWidth="1.8" /><path d="M20 4h-6a2 2 0 00-2 2v14a1 1 0 011-1h7V4z" stroke="currentColor" strokeWidth="1.8" /></svg>;
 }
 
 // Lesson Section Icons (small)
@@ -69,9 +75,21 @@ function LiPC({ className }: { className?: string }) { return <svg viewBox="0 0 
 
 // Types
 interface LessonStep { type: 'lesson'; title: string; subtitle: string; sections: LessonSection[]; buttonLabel?: string; }
-interface InteractiveStep { type: 'interactive'; key: string; }
+interface InteractiveStep { type: 'interactive'; key: string; label: string; }
 type Step = LessonStep | InteractiveStep;
 interface Chapter { id: string; title: string; description: string; icon: ReactNode; color: string; steps: Step[]; }
+
+// Interactive step labels map
+const INTERACTIVE_LABELS: Record<string, string> = {
+  'binary-task': 'Binäre Addition üben',
+  'xor-gate': 'XOR-Gatter finden',
+  'and-gate': 'AND-Gatter finden',
+  'half-adder': 'Halbaddierer-Schaltung',
+  'skill-check': 'Wissens-Check',
+  'superposition': 'Superposition simulieren',
+  'quantum-gate': 'Quantengatter testen',
+  'deutsch-jozsa': 'Deutsch-Jozsa Simulation',
+};
 
 // Chapter Data — ALL GERMAN
 const CHAPTERS: Chapter[] = [
@@ -79,7 +97,7 @@ const CHAPTERS: Chapter[] = [
     id: 'bits',
     title: 'Bits & Binär',
     description: 'Was sind Bits und wie rechnet man binär?',
-    icon: <IconBit className="w-6 h-6" />,
+    icon: <IconBit className="w-7 h-7" />,
     color: '#3B82F6',
     steps: [
       {
@@ -93,14 +111,14 @@ const CHAPTERS: Chapter[] = [
           { icon: <LiTarget className={ic} />, title: 'Jetzt du!', content: 'Gleich füllst du eine binäre Additionstabelle aus — einfach Bits antippen!' },
         ],
       },
-      { type: 'interactive', key: 'binary-task' },
+      { type: 'interactive', key: 'binary-task', label: 'Binäre Addition üben' },
     ],
   },
   {
     id: 'gates',
     title: 'Logikgatter',
     description: 'Die Bausteine aller digitalen Schaltungen',
-    icon: <IconGate className="w-6 h-6" />,
+    icon: <IconGate className="w-7 h-7" />,
     color: '#10B981',
     steps: [
       {
@@ -114,8 +132,8 @@ const CHAPTERS: Chapter[] = [
           { icon: <LiSplit className={ic} />, title: 'XOR-Gatter', content: 'Gibt 1 aus, wenn die Eingaben verschieden sind. Wie ein Flurschalter mit zwei Schaltern.' },
         ],
       },
-      { type: 'interactive', key: 'xor-gate' },
-      { type: 'interactive', key: 'and-gate' },
+      { type: 'interactive', key: 'xor-gate', label: 'XOR-Gatter finden' },
+      { type: 'interactive', key: 'and-gate', label: 'AND-Gatter finden' },
       {
         type: 'lesson',
         title: 'Der Halbaddierer',
@@ -127,15 +145,15 @@ const CHAPTERS: Chapter[] = [
         ],
         buttonLabel: 'Schaltung ansehen',
       },
-      { type: 'interactive', key: 'half-adder' },
-      { type: 'interactive', key: 'skill-check' },
+      { type: 'interactive', key: 'half-adder', label: 'Halbaddierer-Schaltung' },
+      { type: 'interactive', key: 'skill-check', label: 'Wissens-Check' },
     ],
   },
   {
     id: 'qubits',
     title: 'Qubits',
     description: 'Von klassischen Bits zu Quantenbits',
-    icon: <IconQubit className="w-6 h-6" />,
+    icon: <IconQubit className="w-7 h-7" />,
     color: '#6366F1',
     steps: [
       {
@@ -149,14 +167,14 @@ const CHAPTERS: Chapter[] = [
           { icon: <LiChart className={ic} />, title: 'Exponentielles Wachstum', content: 'N Qubits = 2^N Zustände gleichzeitig. Das ist der Schlüssel zum Quantenvorteil.' },
         ],
       },
-      { type: 'interactive', key: 'superposition' },
+      { type: 'interactive', key: 'superposition', label: 'Superposition simulieren' },
     ],
   },
   {
     id: 'quantum-gates',
     title: 'Quantengatter',
     description: 'Pauli-X, Hadamard und CNOT erklärt',
-    icon: <IconQuantumGate className="w-6 h-6" />,
+    icon: <IconQuantumGate className="w-7 h-7" />,
     color: '#8B5CF6',
     steps: [
       {
@@ -170,14 +188,14 @@ const CHAPTERS: Chapter[] = [
           { icon: <LiGear className={ic} />, title: 'Zusammen', content: 'Diese drei Gatter können jeden Quantenalgorithmus bauen. H erzeugt Superposition, CNOT erzeugt Verschränkung.' },
         ],
       },
-      { type: 'interactive', key: 'quantum-gate' },
+      { type: 'interactive', key: 'quantum-gate', label: 'Quantengatter testen' },
     ],
   },
   {
     id: 'supremacy',
     title: 'Quantenüberlegenheit',
     description: 'Warum Quantencomputer exponentiell schneller sind',
-    icon: <IconRocket className="w-6 h-6" />,
+    icon: <IconRocket className="w-7 h-7" />,
     color: '#F59E0B',
     steps: [
       {
@@ -206,7 +224,7 @@ const CHAPTERS: Chapter[] = [
     id: 'deutsch-jozsa',
     title: 'Deutsch-Jozsa',
     description: 'Der erste Beweis für Quantenvorteil',
-    icon: <IconBrain className="w-6 h-6" />,
+    icon: <IconBrain className="w-7 h-7" />,
     color: '#EC4899',
     steps: [
       {
@@ -220,14 +238,14 @@ const CHAPTERS: Chapter[] = [
           { icon: <LiCrystal className={ic} />, title: 'So funktioniert es', content: 'Hadamard → Oracle kodiert f(x) in die Phase → Interferenz → Eine deterministische Messung.' },
         ],
       },
-      { type: 'interactive', key: 'deutsch-jozsa' },
+      { type: 'interactive', key: 'deutsch-jozsa', label: 'Deutsch-Jozsa Simulation' },
     ],
   },
   {
     id: 'summary',
     title: 'Zusammenfassung',
     description: 'Was du gelernt hast',
-    icon: <IconGrad className="w-6 h-6" />,
+    icon: <IconGrad className="w-7 h-7" />,
     color: '#10B981',
     steps: [
       {
@@ -250,17 +268,32 @@ const CHAPTERS: Chapter[] = [
 // Smooth animation config
 const pageTransition = { duration: 0.25, ease: [0.25, 0.1, 0.25, 1] as const };
 
+// Step name helper
+function getStepName(step: Step): string {
+  if (step.type === 'lesson') return step.title;
+  return step.label;
+}
+
 export default function Home() {
   const [view, setView] = useState<'overview' | 'chapter'>('overview');
   const [chapterIdx, setChapterIdx] = useState(0);
   const [stepIdx, setStepIdx] = useState(0);
   const [completedChapters, setCompletedChapters] = useState<Set<string>>(new Set());
+  const [expandedChapter, setExpandedChapter] = useState<string | null>(null);
 
   const chapter = CHAPTERS[chapterIdx];
   const step = chapter?.steps[stepIdx];
   const totalSteps = chapter?.steps.length ?? 0;
 
-  const enterChapter = (idx: number) => { setChapterIdx(idx); setStepIdx(0); setView('chapter'); };
+  const enterChapterAt = (chIdx: number, stIdx: number) => {
+    setChapterIdx(chIdx);
+    setStepIdx(stIdx);
+    setView('chapter');
+  };
+
+  const toggleExpand = (id: string) => {
+    setExpandedChapter(prev => prev === id ? null : id);
+  };
 
   const nextStep = () => {
     if (stepIdx < totalSteps - 1) { setStepIdx(stepIdx + 1); }
@@ -272,11 +305,9 @@ export default function Home() {
   };
 
   const skipToNext = () => {
-    // Skip to the next lesson or end of chapter
     for (let i = stepIdx + 1; i < totalSteps; i++) {
       if (chapter.steps[i].type === 'lesson') { setStepIdx(i); return; }
     }
-    // No more lessons, complete chapter
     setCompletedChapters(prev => new Set(prev).add(chapter.id));
     setView('overview');
   };
@@ -300,78 +331,165 @@ export default function Home() {
     }
   };
 
-  // Overview
+  // ─── OVERVIEW ─────────────────────────────────────────────
   if (view === 'overview') {
     return (
-      <main className="min-h-dvh bg-gray-50 overflow-x-hidden">
-        <div className="max-w-lg mx-auto px-4 py-8 sm:py-12">
-          <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={pageTransition} className="text-center mb-8 sm:mb-10">
-            <motion.div initial={{ scale: 0.85 }} animate={{ scale: 1 }} transition={{ delay: 0.08 }}
-              className="w-16 h-16 mx-auto mb-4 bg-white rounded-2xl soft-shadow-lg flex items-center justify-center text-indigo-500">
-              <IconQubit className="w-8 h-8" />
+      <main className="min-h-dvh bg-gradient-to-b from-slate-50 to-gray-100 overflow-x-hidden">
+        {/* Hero Header */}
+        <div className="relative overflow-hidden">
+          <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/5 via-transparent to-purple-500/5" />
+          <div className="max-w-2xl mx-auto px-5 pt-10 pb-8 sm:pt-14 sm:pb-10 relative">
+            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={pageTransition} className="text-center">
+              <motion.div initial={{ scale: 0.8, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} transition={{ delay: 0.05, type: 'spring', stiffness: 200 }}
+                className="w-20 h-20 sm:w-24 sm:h-24 mx-auto mb-5 bg-white rounded-3xl soft-shadow-lg flex items-center justify-center text-indigo-500">
+                <IconQubit className="w-10 h-10 sm:w-12 sm:h-12" />
+              </motion.div>
+              <h1 className="text-3xl sm:text-4xl font-bold text-slate-900 tracking-tight mb-3">Quantenalgorithmen</h1>
+              <p className="text-slate-500 text-base sm:text-lg max-w-md mx-auto">Interaktiv lernen — von Bits bis Quantenüberlegenheit</p>
             </motion.div>
-            <h1 className="text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight mb-2">Quantenalgorithmen</h1>
-            <p className="text-slate-500 text-sm sm:text-base">Interaktiv lernen — von Bits bis Quantenüberlegenheit</p>
-          </motion.div>
+          </div>
+        </div>
 
-          <div className="space-y-3">
+        {/* Chapter List */}
+        <div className="max-w-2xl mx-auto px-5 pb-8">
+          <div className="space-y-3 sm:space-y-4">
             {CHAPTERS.map((ch, i) => {
               const isCompleted = completedChapters.has(ch.id);
+              const isExpanded = expandedChapter === ch.id;
               return (
-                <motion.button key={ch.id}
-                  initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.08 + i * 0.04, ...pageTransition }}
-                  onClick={() => enterChapter(i)}
-                  className="w-full text-left bg-white rounded-2xl p-4 sm:p-5 soft-shadow hover:soft-shadow-lg transition-shadow group">
-                  <div className="flex items-center gap-3 sm:gap-4">
-                    <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl flex items-center justify-center flex-shrink-0"
-                      style={{ backgroundColor: ch.color + '18', color: ch.color }}>
-                      {isCompleted ? <IconCheck className="w-5 h-5 sm:w-6 sm:h-6" /> : ch.icon}
+                <motion.div key={ch.id}
+                  initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.06 + i * 0.04, ...pageTransition }}
+                  className="bg-white rounded-2xl sm:rounded-3xl soft-shadow overflow-hidden"
+                >
+                  {/* Chapter Header */}
+                  <button onClick={() => toggleExpand(ch.id)}
+                    className="w-full text-left p-5 sm:p-6 flex items-center gap-4 sm:gap-5 group hover:bg-slate-50/50 transition-colors">
+                    <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl flex items-center justify-center flex-shrink-0 transition-transform group-hover:scale-105"
+                      style={{ backgroundColor: ch.color + '15', color: ch.color }}>
+                      {isCompleted ? <IconCheck className="w-6 h-6 sm:w-7 sm:h-7" /> : ch.icon}
                     </div>
                     <div className="flex-1 min-w-0">
-                      <span className="text-[10px] sm:text-xs text-slate-400 font-medium uppercase">Kapitel {i + 1}</span>
-                      <h3 className="font-semibold text-slate-800 text-sm sm:text-base">{ch.title}</h3>
-                      <p className="text-slate-400 text-xs sm:text-sm truncate">{ch.description}</p>
+                      <div className="flex items-center gap-2 mb-0.5">
+                        <span className="text-[11px] sm:text-xs font-semibold uppercase tracking-wider" style={{ color: ch.color }}>
+                          Kapitel {i + 1}
+                        </span>
+                        {isCompleted && (
+                          <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-100 text-emerald-600 font-medium">✓ fertig</span>
+                        )}
+                      </div>
+                      <h3 className="font-bold text-slate-800 text-base sm:text-lg leading-tight">{ch.title}</h3>
+                      <p className="text-slate-400 text-sm sm:text-base mt-0.5 truncate">{ch.description}</p>
                     </div>
-                    <IconChevronRight className="w-4 h-4 sm:w-5 sm:h-5 text-slate-300 group-hover:text-slate-500 transition-colors flex-shrink-0" />
-                  </div>
-                </motion.button>
+                    <div className="flex items-center gap-2 flex-shrink-0">
+                      <span className="text-xs text-slate-300 font-medium hidden sm:block">{ch.steps.length} Schritte</span>
+                      <motion.div animate={{ rotate: isExpanded ? 180 : 0 }} transition={{ duration: 0.2 }}>
+                        <IconChevronDown className="w-5 h-5 sm:w-6 sm:h-6 text-slate-300 group-hover:text-slate-500 transition-colors" />
+                      </motion.div>
+                    </div>
+                  </button>
+
+                  {/* Expanded Sub-Steps */}
+                  <AnimatePresence>
+                    {isExpanded && (
+                      <motion.div
+                        initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }} exit={{ height: 0, opacity: 0 }}
+                        transition={{ duration: 0.25, ease: [0.25, 0.1, 0.25, 1] }}
+                        className="overflow-hidden"
+                      >
+                        <div className="px-5 sm:px-6 pb-4 sm:pb-5">
+                          <div className="border-t border-slate-100 pt-3 sm:pt-4 space-y-1">
+                            {ch.steps.map((s, si) => (
+                              <button key={si} onClick={() => enterChapterAt(i, si)}
+                                className="w-full flex items-center gap-3 py-2.5 sm:py-3 px-3 sm:px-4 rounded-xl hover:bg-slate-50 transition-colors text-left group/step">
+                                <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg flex items-center justify-center flex-shrink-0"
+                                  style={{ backgroundColor: ch.color + '10', color: ch.color }}>
+                                  {s.type === 'lesson'
+                                    ? <IconBook className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+                                    : <IconPlay className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
+                                  }
+                                </div>
+                                <div className="flex-1 min-w-0">
+                                  <span className="text-sm sm:text-base text-slate-700 font-medium group-hover/step:text-slate-900 transition-colors truncate block">
+                                    {getStepName(s)}
+                                  </span>
+                                  <span className="text-[11px] sm:text-xs text-slate-400">
+                                    {s.type === 'lesson' ? 'Lektion' : 'Interaktiv'}
+                                  </span>
+                                </div>
+                                <span className="text-xs text-slate-300 font-mono">{si + 1}/{ch.steps.length}</span>
+                              </button>
+                            ))}
+                            {/* Start Full Chapter Button */}
+                            <div className="pt-2">
+                              <button onClick={() => enterChapterAt(i, 0)}
+                                className="w-full py-3 sm:py-3.5 rounded-xl font-semibold text-sm sm:text-base text-white transition-all hover:opacity-90 active:scale-[0.98]"
+                                style={{ background: `linear-gradient(135deg, ${ch.color}, ${ch.color}CC)` }}>
+                                Kapitel starten →
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </motion.div>
               );
             })}
           </div>
+
+          {/* Footer — Team Credits */}
+          <motion.footer
+            initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.5 }}
+            className="mt-12 sm:mt-16 pb-8 text-center"
+          >
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/60 backdrop-blur-sm border border-slate-200/50 mb-4">
+              <div className="w-2 h-2 rounded-full bg-indigo-400 animate-pulse" />
+              <span className="text-xs sm:text-sm font-semibold text-slate-600 tracking-wide">Wissenschaftswoche</span>
+            </div>
+            <div className="flex flex-wrap justify-center gap-x-4 gap-y-1 mb-3">
+              {['Rijad Besic', 'Leon Lin', 'Christian Raileanu'].map(name => (
+                <span key={name} className="text-sm sm:text-base text-slate-500 font-medium">{name}</span>
+              ))}
+            </div>
+            <p className="text-xs text-slate-300">Interaktives Lernmodul · 2025</p>
+          </motion.footer>
         </div>
       </main>
     );
   }
 
-  // Chapter View
+  // ─── CHAPTER VIEW ────────────────────────────────────────
   return (
-    <main className="min-h-dvh bg-gray-50 flex flex-col overflow-x-hidden">
-      <div className="sticky top-0 z-50 bg-gray-50/80 backdrop-blur-md border-b border-slate-200/50">
-        <div className="max-w-lg mx-auto px-4 py-3 flex items-center justify-between">
-          <button onClick={goBack} className="flex items-center gap-1 text-slate-500 hover:text-slate-700 transition-colors">
-            <IconArrowLeft className="w-4 h-4" />
-            <span className="text-xs sm:text-sm font-medium">{stepIdx > 0 ? 'Zurück' : 'Übersicht'}</span>
+    <main className="min-h-dvh bg-gradient-to-b from-slate-50 to-gray-100 flex flex-col overflow-x-hidden">
+      {/* Bigger Nav Bar */}
+      <div className="sticky top-0 z-50 bg-white/70 backdrop-blur-xl border-b border-slate-200/40">
+        <div className="max-w-2xl mx-auto px-5 py-4 sm:py-5 flex items-center justify-between">
+          <button onClick={goBack} className="flex items-center gap-2 text-slate-500 hover:text-slate-800 transition-colors">
+            <IconArrowLeft className="w-5 h-5" />
+            <span className="text-sm sm:text-base font-medium">{stepIdx > 0 ? 'Zurück' : 'Übersicht'}</span>
           </button>
-          <div className="flex gap-1.5">
-            {Array.from({ length: totalSteps }).map((_, i) => (
-              <div key={i}
-                className={`w-2 h-2 rounded-full transition-all duration-200 ${i === stepIdx ? 'w-5 sm:w-6' : ''}`}
-                style={{
-                  backgroundColor: i === stepIdx ? chapter.color : i < stepIdx ? chapter.color + '60' : '#E2E8F0',
-                  borderRadius: '999px',
-                }}
-              />
-            ))}
+          <div className="flex items-center gap-2">
+            <div className="flex gap-1.5">
+              {Array.from({ length: totalSteps }).map((_, i) => (
+                <div key={i}
+                  className="h-2.5 rounded-full transition-all duration-300"
+                  style={{
+                    width: i === stepIdx ? 24 : 10,
+                    backgroundColor: i === stepIdx ? chapter.color : i < stepIdx ? chapter.color + '50' : '#E2E8F0',
+                  }}
+                />
+              ))}
+            </div>
           </div>
-          <span className="text-[10px] sm:text-xs text-slate-400 font-medium">{stepIdx + 1}/{totalSteps}</span>
+          <span className="text-xs sm:text-sm text-slate-400 font-semibold tabular-nums">{stepIdx + 1} / {totalSteps}</span>
         </div>
       </div>
 
-      <div className="flex-1 flex items-center justify-center px-4 py-6 sm:p-6">
+      <div className="flex-1 flex items-center justify-center px-5 py-8 sm:p-8">
         <AnimatePresence mode="wait">
-          <motion.div key={`${chapterIdx}-${stepIdx}`} className="w-full"
-            initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.15 }}>
+          <motion.div key={`${chapterIdx}-${stepIdx}`} className="w-full max-w-2xl"
+            initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }} transition={{ duration: 0.2 }}>
             {step?.type === 'lesson' ? (
               <LessonPage
                 title={step.title}
