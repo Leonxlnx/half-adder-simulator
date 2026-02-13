@@ -16,21 +16,21 @@ const gateInfo: Record<GateType, { name: string; symbol: string; color: string; 
         symbol: 'X',
         color: '#EF4444',
         matrix: [['0', '1'], ['1', '0']],
-        description: 'Dreht den Zustand um 180° — das Quanten-NOT-Gatter. Wandelt |0⟩ in |1⟩ und umgekehrt.',
+        description: 'Flips the state by 180° — the quantum NOT gate. Turns |0⟩ into |1⟩ and vice versa.',
     },
     'hadamard': {
         name: 'Hadamard',
         symbol: 'H',
         color: '#6366F1',
         matrix: [['1/√2', '1/√2'], ['1/√2', '-1/√2']],
-        description: 'Bringt ein Qubit in Superposition. Erzeugt gleiche Wahrscheinlichkeit für |0⟩ und |1⟩.',
+        description: 'Puts a qubit into superposition — equal probability of |0⟩ and |1⟩.',
     },
     'cnot': {
         name: 'CNOT',
         symbol: 'CX',
         color: '#10B981',
         matrix: [['1', '0', '0', '0'], ['0', '1', '0', '0'], ['0', '0', '0', '1'], ['0', '0', '1', '0']],
-        description: 'Kontroll-Qubit bestimmt: Wenn es 1 ist, wird das Ziel invertiert. Erzeugt Verschränkung.',
+        description: 'Controlled-NOT: flips the target qubit when the control qubit is 1. Creates entanglement.',
     },
 };
 
@@ -61,11 +61,11 @@ export default function QuantumGateSim({ onContinue }: QuantumGateSimProps) {
 
             <motion.h2 initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}
                 className="text-lg sm:text-xl font-semibold text-slate-900 text-center mb-1 sm:mb-2 px-2">
-                Quantengatter Simulator
+                Quantum Gate Simulator
             </motion.h2>
             <motion.p initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}
                 className="text-slate-500 text-center text-xs sm:text-sm mb-4 sm:mb-6 px-2">
-                Wähle ein Gatter und wende es auf ein Qubit an.
+                Pick a gate and apply it to a qubit.
             </motion.p>
 
             {/* Gate Selector */}
@@ -133,11 +133,11 @@ export default function QuantumGateSim({ onContinue }: QuantumGateSimProps) {
                     <motion.button whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }} onClick={handleApply} disabled={applied}
                         className="px-4 sm:px-5 py-2 sm:py-2.5 text-white rounded-xl text-xs sm:text-sm font-medium disabled:opacity-50"
                         style={{ backgroundColor: info.color }}>
-                        Anwenden
+                        Apply
                     </motion.button>
                     <motion.button whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }} onClick={handleReset}
                         className="px-3 sm:px-4 py-2 sm:py-2.5 bg-slate-200 text-slate-600 rounded-xl text-xs sm:text-sm font-medium">
-                        Zurücksetzen
+                        Reset
                     </motion.button>
                 </div>
             </motion.div>
@@ -145,7 +145,7 @@ export default function QuantumGateSim({ onContinue }: QuantumGateSimProps) {
             <div className="flex justify-center">
                 <motion.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} onClick={onContinue}
                     className="w-full sm:w-auto px-10 py-3 sm:py-3.5 bg-slate-900 text-white rounded-full text-base sm:text-lg font-medium soft-shadow">
-                    Weiter
+                    Continue
                 </motion.button>
             </div>
         </motion.div>

@@ -1,6 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
+import Gate from './Gate';
 
 interface HalfAdderScreenProps {
     onContinue: () => void;
@@ -8,69 +9,48 @@ interface HalfAdderScreenProps {
 
 export default function HalfAdderScreen({ onContinue }: HalfAdderScreenProps) {
     return (
-        <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: -20 }}
-            transition={{ duration: 0.4 }}
-            className="w-full max-w-lg mx-auto"
-        >
+        <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }}
+            transition={{ duration: 0.4 }} className="w-full max-w-lg mx-auto text-center">
             <motion.h2 initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}
-                className="text-lg sm:text-xl font-semibold text-slate-900 text-center mb-1 sm:mb-2 px-2">
-                Du hast einen Halbaddierer gebaut!
+                className="text-lg sm:text-xl font-semibold text-slate-900 mb-1 sm:mb-2 px-2">
+                The Half Adder
             </motion.h2>
-
             <motion.p initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}
-                className="text-slate-500 text-center text-sm sm:text-base mb-4 sm:mb-8 px-2">
-                Zwei Gatter, die zwei Binärziffern addieren können.
+                className="text-slate-500 text-sm sm:text-base mb-4 sm:mb-8 px-2">
+                Two gates, one circuit — it adds single-digit binary numbers.
             </motion.p>
 
             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.15 }}
-                className="bg-white rounded-2xl sm:rounded-3xl p-4 sm:p-8 soft-shadow-lg mb-6 sm:mb-8">
-                <svg viewBox="0 0 400 200" className="w-full h-auto">
-                    <motion.text initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.2 }}
-                        x="20" y="60" className="fill-blue-600 font-semibold text-lg">A</motion.text>
-                    <motion.text initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.25 }}
-                        x="20" y="160" className="fill-blue-600 font-semibold text-lg">B</motion.text>
-
-                    <motion.path initial={{ pathLength: 0 }} animate={{ pathLength: 1 }} transition={{ delay: 0.3, duration: 0.5 }}
-                        d="M 40 55 L 80 55 L 80 45 L 140 45" stroke="#94A3B8" strokeWidth="3" fill="none" strokeLinecap="round" />
-                    <motion.path initial={{ pathLength: 0 }} animate={{ pathLength: 1 }} transition={{ delay: 0.35, duration: 0.5 }}
-                        d="M 40 55 L 80 55 L 80 125 L 140 125" stroke="#94A3B8" strokeWidth="3" fill="none" strokeLinecap="round" />
-                    <motion.path initial={{ pathLength: 0 }} animate={{ pathLength: 1 }} transition={{ delay: 0.4, duration: 0.5 }}
-                        d="M 40 155 L 100 155 L 100 65 L 140 65" stroke="#94A3B8" strokeWidth="3" fill="none" strokeLinecap="round" />
-                    <motion.path initial={{ pathLength: 0 }} animate={{ pathLength: 1 }} transition={{ delay: 0.45, duration: 0.5 }}
-                        d="M 40 155 L 100 155 L 100 145 L 140 145" stroke="#94A3B8" strokeWidth="3" fill="none" strokeLinecap="round" />
-
-                    <motion.g initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: 0.5, duration: 0.3 }}>
-                        <path d="M 145 30 Q 160 55 145 80 M 150 30 L 175 30 Q 215 30 215 55 Q 215 80 175 80 L 150 80 Q 165 55 150 30" fill="#6366F1" stroke="#4F46E5" strokeWidth="2" />
-                        <text x="170" y="90" className="fill-slate-500 text-xs">XOR</text>
-                    </motion.g>
-
-                    <motion.g initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: 0.55, duration: 0.3 }}>
-                        <path d="M 145 110 L 175 110 Q 215 110 215 135 Q 215 160 175 160 L 145 160 Z" fill="#10B981" stroke="#059669" strokeWidth="2" />
-                        <text x="170" y="170" className="fill-slate-500 text-xs">AND</text>
-                    </motion.g>
-
-                    <motion.path initial={{ pathLength: 0 }} animate={{ pathLength: 1 }} transition={{ delay: 0.6, duration: 0.4 }}
-                        d="M 215 55 L 320 55" stroke="#94A3B8" strokeWidth="3" fill="none" strokeLinecap="round" />
-                    <motion.path initial={{ pathLength: 0 }} animate={{ pathLength: 1 }} transition={{ delay: 0.65, duration: 0.4 }}
-                        d="M 215 135 L 320 135" stroke="#94A3B8" strokeWidth="3" fill="none" strokeLinecap="round" />
-
-                    <motion.text initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.7 }}
-                        x="330" y="60" className="fill-indigo-600 font-semibold text-sm">Summe</motion.text>
-                    <motion.text initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.75 }}
-                        x="330" y="140" className="fill-emerald-600 font-semibold text-sm">Übertrag</motion.text>
-                </svg>
+                className="bg-white rounded-2xl sm:rounded-3xl p-6 sm:p-8 soft-shadow-lg mb-4 sm:mb-6 inline-block">
+                <div className="flex flex-col items-center gap-4 sm:gap-6">
+                    <div className="flex items-center gap-6 sm:gap-8">
+                        <div className="text-right">
+                            <p className="text-xs text-slate-400 mb-0.5">Ones place</p>
+                            <p className="text-xs sm:text-sm font-semibold text-indigo-600">XOR</p>
+                        </div>
+                        <Gate type="xor" size={56} active />
+                    </div>
+                    <div className="flex items-center gap-6 sm:gap-8">
+                        <div className="text-right">
+                            <p className="text-xs text-slate-400 mb-0.5">Carry</p>
+                            <p className="text-xs sm:text-sm font-semibold text-emerald-600">AND</p>
+                        </div>
+                        <Gate type="and" size={56} active />
+                    </div>
+                </div>
             </motion.div>
 
-            <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.8 }}
-                className="flex justify-center">
+            <motion.p initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.25 }}
+                className="text-xs sm:text-sm text-slate-500 mb-6 sm:mb-8 max-w-sm mx-auto">
+                XOR handles the sum bit, AND handles the carry. Together they form the fundamental building block of every computer processor.
+            </motion.p>
+
+            <div className="flex justify-center">
                 <motion.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} onClick={onContinue}
                     className="w-full sm:w-auto px-10 py-3 sm:py-3.5 bg-slate-900 text-white rounded-full text-base sm:text-lg font-medium soft-shadow">
-                    Ausprobieren
+                    Continue
                 </motion.button>
-            </motion.div>
+            </div>
         </motion.div>
     );
 }

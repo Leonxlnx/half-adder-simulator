@@ -1,10 +1,21 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Calculator } from 'lucide-react';
 
 interface IntroScreenProps {
     onContinue: () => void;
+}
+
+/* Custom atom/circuit SVG icon */
+function AtomIcon({ className }: { className?: string }) {
+    return (
+        <svg viewBox="0 0 48 48" fill="none" className={className} xmlns="http://www.w3.org/2000/svg">
+            <circle cx="24" cy="24" r="4" fill="currentColor" />
+            <ellipse cx="24" cy="24" rx="18" ry="7" stroke="currentColor" strokeWidth="2" fill="none" />
+            <ellipse cx="24" cy="24" rx="18" ry="7" stroke="currentColor" strokeWidth="2" fill="none" transform="rotate(60 24 24)" />
+            <ellipse cx="24" cy="24" rx="18" ry="7" stroke="currentColor" strokeWidth="2" fill="none" transform="rotate(120 24 24)" />
+        </svg>
+    );
 }
 
 export default function IntroScreen({ onContinue }: IntroScreenProps) {
@@ -22,7 +33,7 @@ export default function IntroScreen({ onContinue }: IntroScreenProps) {
                 transition={{ delay: 0.2, duration: 0.5 }}
                 className="w-20 h-20 bg-white rounded-3xl soft-shadow-lg flex items-center justify-center mx-auto mb-8"
             >
-                <Calculator className="w-10 h-10 text-indigo-500" />
+                <AtomIcon className="w-10 h-10 text-indigo-500" />
             </motion.div>
 
             <motion.h1

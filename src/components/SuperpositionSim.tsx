@@ -53,7 +53,7 @@ export default function SuperpositionSim({ onContinue }: SuperpositionSimProps) 
             </motion.h2>
             <motion.p initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}
                 className="text-slate-500 text-center text-xs sm:text-sm mb-4 sm:mb-6 px-2">
-                Nutze Hadamard um Superposition zu erzeugen, dann miss das Qubit.
+                Apply Hadamard to create superposition, then measure the qubit.
             </motion.p>
 
             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.15 }}
@@ -116,7 +116,7 @@ export default function SuperpositionSim({ onContinue }: SuperpositionSimProps) 
                     </motion.button>
                     <motion.button whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }} onClick={measure} disabled={measuring}
                         className="px-4 sm:px-5 py-2 sm:py-2.5 bg-slate-800 text-white rounded-xl text-xs sm:text-sm font-medium disabled:opacity-50">
-                        Messen
+                        Measure
                     </motion.button>
                     <motion.button whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }} onClick={reset}
                         className="px-3 sm:px-4 py-2 sm:py-2.5 bg-slate-200 text-slate-600 rounded-xl text-xs sm:text-sm font-medium">
@@ -129,7 +129,7 @@ export default function SuperpositionSim({ onContinue }: SuperpositionSimProps) 
                     <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}
                         className="pt-3 sm:pt-4 border-t border-slate-100">
                         <p className="text-xs sm:text-sm text-slate-500 text-center mb-2">
-                            Messungen: {measurements.length}
+                            Measurements: {measurements.length}
                         </p>
                         <div className="flex justify-center gap-4 sm:gap-6 text-xs sm:text-sm">
                             <span className="font-mono text-slate-600">|0⟩: {zeros} ({measurements.length > 0 ? Math.round(zeros / measurements.length * 100) : 0}%)</span>
@@ -142,7 +142,7 @@ export default function SuperpositionSim({ onContinue }: SuperpositionSimProps) 
             <div className="flex justify-center">
                 <motion.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} onClick={onContinue}
                     className="w-full sm:w-auto px-10 py-3 sm:py-3.5 bg-slate-900 text-white rounded-full text-base sm:text-lg font-medium soft-shadow">
-                    Weiter
+                    Continue
                 </motion.button>
             </div>
         </motion.div>

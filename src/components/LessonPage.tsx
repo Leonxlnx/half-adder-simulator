@@ -1,9 +1,10 @@
 'use client';
 
 import { motion } from 'framer-motion';
+import { ReactNode } from 'react';
 
 export interface LessonSection {
-    icon: string;
+    icon: ReactNode;
     title: string;
     content: string;
 }
@@ -16,7 +17,7 @@ interface LessonPageProps {
     buttonLabel?: string;
 }
 
-export default function LessonPage({ title, subtitle, sections, onContinue, buttonLabel = 'Weiter' }: LessonPageProps) {
+export default function LessonPage({ title, subtitle, sections, onContinue, buttonLabel = 'Continue' }: LessonPageProps) {
     return (
         <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -52,7 +53,9 @@ export default function LessonPage({ title, subtitle, sections, onContinue, butt
                         className="bg-white rounded-2xl p-4 sm:p-5 soft-shadow"
                     >
                         <div className="flex items-start gap-3">
-                            <span className="text-xl sm:text-2xl flex-shrink-0 mt-0.5">{section.icon}</span>
+                            <div className="flex-shrink-0 mt-0.5 w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-slate-50 flex items-center justify-center text-slate-600">
+                                {section.icon}
+                            </div>
                             <div className="min-w-0">
                                 <h3 className="font-semibold text-slate-800 text-sm sm:text-base mb-1">
                                     {section.title}
